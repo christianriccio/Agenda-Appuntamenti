@@ -14,4 +14,5 @@ struct Appointment: Identifiable, Codable {
     var trattamento: String
     var date: Date
     var finito: Bool
+    var prezzo: String
 }

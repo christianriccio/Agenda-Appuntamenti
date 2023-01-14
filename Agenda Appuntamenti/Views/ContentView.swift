@@ -11,83 +11,25 @@ import FirebaseFirestoreSwift
 
 
 struct ContentView: View {
-    
- 
-    
-    @ObservedObject var viewModel = AppointmentsViewModel()
-    @State var showModal = false
-    @State var dates = Date()
-    @ObservedObject var viewModelAppointment = AppointmentViewModel()
+    @State private var selectedTab = "Home"
     var body: some View {
-        NavigationView {
-            VStack {
-                CalendarView(dates:$dates)
-                List {
-                    ForEach(viewModel.appointments.filter { appointment in
-                        
-                        
-                        Calendar.current.isDate(appointment.date, equalTo: dates, toGranularity: .day)
-                    }) { appointment in
-                        if(!appointment.finito){
-                            VStack(alignment: .leading){
-                                Text("Nome cliente: \(appointment.nomeCliente)")
-                                Text("Trattamento \(appointment.trattamento)")
-                                Text("Orario: \(appointment.date.formatted(date: .omitted, time: .standard))")
-                                        }.swipeActions(edge:.trailing){
-                                Button{
-                                    viewModelAppointment.appointment = appointment
-                                    viewModelAppointment.appointment.finito = true
-                                    viewModelAppointment.handleDoneTapped()
-                                    
-                                }label: {
-                                    Image(systemName: "bookmark.circle.fill")
-                                }.tint(Color.green)
-                                
-                            }
-                        }
-                    }
+        TabView(selection: $selectedTab) {
+            Incompleti()
+                .tabItem {
+                    Label("Incompleti", systemImage: "scissors")
                 }
-            }
-            .onAppear(){self.viewModel.subscribe()}
-            .navigationBarTitle("Appuntamenti")
-            .navigationBarItems(trailing:
-                Button(action: {
-                showModal.toggle()
-                }) {
-                    Image(systemName: "plus")
-                }.sheet(isPresented: $showModal) {
-                    ModalIntervento(dates:$dates)
+                .tag("Home")
+            Completi()
+                .tabItem {
+                    Label("Completi", systemImage: "person.fill.checkmark")
                 }
-            )
+                .tag("Incompleti")
+            
         }
     }
 }
 
-struct CalendarView: View {
-    @Environment(\.calendar) var calendar
-    @Environment(\.timeZone) var timeZone
-    
-    var bounds: PartialRangeFrom<Date> {
-        let start = calendar.date(
-            from: DateComponents(
-                timeZone: timeZone,
-                year: 2022,
-                month: 6,
-                day: 20)
-        )!
-        
-        return start...
 
-    }
-    
-    @Binding var dates:Date
-
-    var body: some View {
-        DatePicker("", selection: $dates, in: bounds)
-            .datePickerStyle(.graphical)
-            .environment(\.locale, Locale.init(identifier: "it"))
-    }
-}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

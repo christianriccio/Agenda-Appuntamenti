@@ -16,7 +16,7 @@ class AppointmentViewModel: ObservableObject{
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(appointment: Appointment = Appointment(nomeCliente:"", trattamento: "", date: Date(), finito: false)){
+    init(appointment: Appointment = Appointment(nomeCliente:"", trattamento: "", date: Date(), finito: false, prezzo: "")){
         
         self.appointment = appointment
         

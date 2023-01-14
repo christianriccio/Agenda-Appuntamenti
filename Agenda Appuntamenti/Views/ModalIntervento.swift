@@ -21,6 +21,10 @@ struct ModalIntervento: View {
                HStack{    Text("Trattamento:").padding(.horizontal)
                    TextField("",text:$viewModel.appointment.trattamento)
                }
+               HStack{    Text("Prezzo:").padding(.horizontal)
+                   TextField("",text:$viewModel.appointment.prezzo).keyboardType(.numberPad)
+               }
+               
                HStack{
 //                   Text("Data:")
                  //  DatePicker("",text:$viewModel.appointment.date)
