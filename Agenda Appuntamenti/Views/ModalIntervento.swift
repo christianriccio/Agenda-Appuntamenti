@@ -27,6 +27,7 @@ struct ModalIntervento: View {
                    DatePicker("Data:", selection: $dates)
                        .datePickerStyle(.compact)
                        .padding(.all)
+                       .environment(\.locale, Locale.init(identifier: "it"))
                
                }
                Spacer()
