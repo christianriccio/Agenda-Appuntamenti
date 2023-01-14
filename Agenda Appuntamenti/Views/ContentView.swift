@@ -12,11 +12,7 @@ import FirebaseFirestoreSwift
 
 struct ContentView: View {
     
-    
-    func isSameDay(datel: Date, date2: Date)->Bool {
-            let calendar = Calendar.current
-            return calendar.isDate(datel, inSameDayAs: date2)
-        }
+ 
     
     @ObservedObject var viewModel = AppointmentsViewModel()
     @State var showModal = false
@@ -35,7 +31,8 @@ struct ContentView: View {
                         if(!appointment.finito){
                             VStack(alignment: .leading){
                                 Text("Nome cliente: \(appointment.nomeCliente)")
-                                     Text("Trattamento \(appointment.trattamento)")
+                                Text("Trattamento \(appointment.trattamento)")
+                                Text("Orario: \(appointment.date.formatted(date: .omitted, time: .standard))")
                                         }.swipeActions(edge:.trailing){
                                 Button{
                                     viewModelAppointment.appointment = appointment
