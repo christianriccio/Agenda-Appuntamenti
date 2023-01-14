@@ -88,6 +88,7 @@ struct CalendarView: View {
     var body: some View {
         DatePicker("", selection: $dates, in: bounds)
             .datePickerStyle(.graphical)
+            .environment(\.locale, Locale.init(identifier: "it"))
     }
 }
 
